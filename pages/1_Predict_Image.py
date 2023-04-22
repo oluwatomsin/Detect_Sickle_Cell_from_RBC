@@ -13,7 +13,7 @@ from PIL import Image
 from ultralyticsplus import YOLO
 from ultralyticsplus import render_result
 import base64
-import plotly
+#import plotly
 import plotly.express as px
 from project_utils import download_pdf
 
