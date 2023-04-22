@@ -1,0 +1,6 @@
+streamlit
+opencv-python-headless
+ultralyticsplus
+Pillow==9.5.0
+weasyprint
+kaleido
