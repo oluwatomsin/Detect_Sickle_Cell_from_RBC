@@ -5,5 +5,5 @@ Pillow==9.5.0
 weasyprint
 kaleido
 plotly
-libpango-1.0-0
-libpangoft2-1.0-0
+libpango
+libpangoft2
