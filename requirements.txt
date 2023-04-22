@@ -4,5 +4,4 @@ ultralyticsplus
 plotly
 kaleido
 Pillow==9.5.0
-gtk4
 weasyprint
