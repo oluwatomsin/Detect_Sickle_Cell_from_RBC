@@ -80,7 +80,7 @@ HOMEPAGE_ACTIVE_MEMBERS='''
 |--|--|
 | Data Collection and Annotation | - |
 | Exploratory Data Analysis (EDA) | - |
-| Model Development | - |
+| Model Development | Pujan shrestha, Amal, Essam Omar, Ishtiaq Hussain, Koyal Biswas |
 | Model Deployment | Amusa Abdulahi tomisin, Amal, Pujan shrestha, Vinod |
 '''
 
