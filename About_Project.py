@@ -79,7 +79,7 @@ HOMEPAGE_ACTIVE_MEMBERS='''
 | Task Name | Active Members |
 |--|--|
 | Data Collection and Annotation | - |
-| Exploratory Data Analysis (EDA) | - |
+| Exploratory Data Analysis (EDA) | Abir Moula, Jawaher Akther Chowdhury, Jerome Ysrael Endaya, Shnehi K, Ishtiaq Hussain, Monali Deshmukh, Koyal Biswa |
 | Model Development | Pujan shrestha, Amal, Essam Omar, Ishtiaq Hussain, Koyal Biswas |
 | Model Deployment | Amusa Abdulahi tomisin, Amal, Pujan shrestha, Vinod |
 '''
