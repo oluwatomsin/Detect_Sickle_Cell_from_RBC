@@ -30,6 +30,10 @@ HEIGHT=300
 #PAGE_TITLE="Diagnose Sickle Cell Diseases by Red Blood Cells(RBCs) Classification"
 
 HEADER_STYLE=f"""<style>
+ 	    [data-testid="stToolbar"]{{
+	    visibility: hidden;
+	    
+	    }}
             footer {{
             visibility: hidden;
             position: relative;
