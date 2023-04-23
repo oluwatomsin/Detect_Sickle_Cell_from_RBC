@@ -9,6 +9,7 @@ BACKGROUND_IMAGE=f"""data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAFACAIAA
 HEADER_STYLE=f"""<style>
 	    [data-testid="stToolbar"]{{
 	    visibility: hidden;
+	    top: -50px;
 	    }}
             [data-testid="stImage"]{{
             height: 300px;
