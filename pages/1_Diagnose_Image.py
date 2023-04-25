@@ -23,12 +23,12 @@ ALLOWED_EXTENSIONS = ["jpg","jpeg","png"]
 
 WARNING_MESSAGE='Disclaimer: This app is not intended to be a substitute for professional medical advice, diagnosis, or treatment. The predictions and information provided by the app are for educational and informational purposes only. The predictions are based on a model and may not always be accurate. Users should consult with a qualified healthcare provider before making any decisions based on the app''s predictions or information.'
 
-WIDTH=380
-
-HEIGHT=380
-
+WIDTH_IMAGE=380
+HEIGHT_IMAGE=380
+WIDTH_CHART=400
+HEIGHT_CHART=400
 WIDTH_PDF=300
-WIDTH_PDF=300
+HEIGHT_PDF=300
 
 #PAGE_TITLE="Diagnose Sickle Cell Diseases by Red Blood Cells(RBCs) Classification"
 
@@ -84,12 +84,12 @@ def display_detected_classes_boundingboxes(imageobj,model_object,model_result):
   return render_result(imageobj,model=model_object,result=model_result[0])
   
 def display_bar_chart(table_df):
-  return px.bar(table_df, x="Classes", y="Count", color="Classes", orientation="v", hover_name="Classes", width=400, height=400,
+  return px.bar(table_df, x="Classes", y="Count", color="Classes", orientation="v", hover_name="Classes", width=WIDTH_CHART, height=HEIGHT_CHART,
             #title="Detected Diseases Cells in RBC",
             color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"])
 
 def display_doughnut_chart(table_df):
-  return px.pie(table_df, values='Percentage', names='Classes', width=400, height=400, 
+  return px.pie(table_df, values='Percentage', names='Classes', width=WIDTH_CHART, height=WIDTH_CHART, 
   #title='Pie Chart of Percentage as per their classes', 
   hover_data=['Count'], hole=0.4, color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"])
     
@@ -147,16 +147,16 @@ with st.container():
         col1, col2 = st.columns([6,6], gap="small")
         with col1:
           st.markdown('### **Uploaded Image**',unsafe_allow_html=True)
-          st.image(imageobj,width=WIDTH)  #300 #640
+          st.image(imageobj,width=WIDTH_IMAGE)  #300 #640
         with col2:
           st.markdown('### **Diagnose disease cells**',unsafe_allow_html=True)
-          st.image(detected_cell_disease_boundingboxes, width=WIDTH)
+          st.image(detected_cell_disease_boundingboxes, width=WIDTH_IMAGE)
         col3, col4 = st.columns([8,4],gap="small")
         with col3:
           st.subheader(f"Total detected classified cells are: {detected_cell_disease_df['Count'].sum()}")
         with col4:
           st.download_button("⬇️ Download Report in PDF",
-                    data=download_pdf(imageobj, detected_cell_disease_boundingboxes,detected_cell_disease_df, RBC_status_df, bar_chart_fig, doughnut_chart_fig,WIDTH,HEIGHT),
+                    data=download_pdf(imageobj, detected_cell_disease_boundingboxes,detected_cell_disease_df, RBC_status_df, bar_chart_fig, doughnut_chart_fig,WIDTH_PDF,HEIGHT_PDF),
                     file_name= uploaded_image_filename.rsplit( ".", 1 )[ 0 ] + ".pdf", mime="application/octet-stream")
         
         st.subheader("Analysis of detected diseases cells")
