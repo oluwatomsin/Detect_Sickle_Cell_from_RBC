@@ -46,16 +46,6 @@ def generate_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_t
   bar_chart_height=height
   doughnut_chart_width=width
   doughnut_chart_height=height
-  css=CSS(string=f'''@page {{size: Letter; margin: 0.1in 0.1in 0in 0.1in;}}
-      img {{border: 5px solid #555;}}
-      body{{display: block; margin: 0px;}}
-      .imagesize{{height: {image_height}px; width: {image_width}px; margin: 0 auto;}}  
-      .barchartsize{{height: {bar_chart_height}px; width: {bar_chart_width}px; margin: 0 auto;}} 
-      .doughnutchartsize{{height: {doughnut_chart_height}px; width: {doughnut_chart_width}px; margin: 0 auto;}} 
-       table,th,td{{text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"}}
-      .column {{float: left; width: 50%; }}
-      .row:after {{ content: ""; display: table; clear: both; }}
-      ''')
 
   cell_disease_table_str='<table><tr>'
   RBC_status_table_str='<table><tr>'
@@ -137,4 +127,15 @@ def generate_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_t
 </body>
 </html>
 """
+  css=CSS(string=f'''@page {{size: Letter; margin: 0.1in 0.1in 0in 0.1in;}}
+      img {{border: 5px solid #555;}}
+      body{{display: block; margin: 0px;}}
+      .imagesize{{height: {image_height}px; width: {image_width}px; margin: 0 auto;}}  
+      .barchartsize{{height: {bar_chart_height}px; width: {bar_chart_width}px; margin: 0 auto;}} 
+      .doughnutchartsize{{height: {doughnut_chart_height}px; width: {doughnut_chart_width}px; margin: 0 auto;}} 
+       table,th,td{{text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"}}
+      .column {{float: left; width: 50%; }}
+      .row {{ content: ""; display: table; clear: both; }}
+      ''')
+
   return HTML(string=HTML_TEMPLATE).write_pdf(optimize_size=(), stylesheets=[css])
