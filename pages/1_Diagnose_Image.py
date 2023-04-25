@@ -27,6 +27,9 @@ WIDTH=380
 
 HEIGHT=380
 
+WIDTH_PDF=300
+WIDTH_PDF=300
+
 #PAGE_TITLE="Diagnose Sickle Cell Diseases by Red Blood Cells(RBCs) Classification"
 
 HEADER_STYLE=f"""<style>
@@ -97,7 +100,7 @@ def RBC_status(RBCpercent): # RBC is given as DataFrame
     C=0
     N=N+Target+Crystal
   NO =N+Other
-  HbDB=pd.DataFrame({"HbA":NO,"HbS":S,"HbC":C},index=["SCD status"])
+  HbDB=pd.DataFrame({"HbA":NO,"HbS":S,"HbC":C},index=["SCD Status"])
   if N>0.9 or S+C< 0.03 : 
    stat="AA"
   elif NO>=0.3 and S>0.03 and S>=C :
@@ -112,7 +115,7 @@ def RBC_status(RBCpercent): # RBC is given as DataFrame
    stat="SC"
   else :
    stat="Non determined"
-  HbDB["status"]=stat
+  HbDB["Status"]=stat
   return HbDB
 
     
@@ -146,22 +149,24 @@ with st.container():
         with col2:
           st.markdown('### **Diagnose disease cells**',unsafe_allow_html=True)
           st.image(detected_cell_disease_boundingboxes, width=WIDTH)
-        st.subheader(f"Total detected classified cells are: {detected_cell_disease_df['Count'].sum()}")
-        st.download_button("⬇️ Download Report in PDF",
+        col3, col4 = st.columns([8,4],gap="small")
+        with col3:
+          st.subheader(f"Total detected classified cells are: {detected_cell_disease_df['Count'].sum()}")
+        with col4:
+          st.download_button("⬇️ Download Report in PDF",
                     data=download_pdf(imageobj, detected_cell_disease_boundingboxes,detected_cell_disease_df, bar_chart_fig, doughnut_chart_fig,WIDTH,HEIGHT),
                     file_name= uploaded_image_filename.rsplit( ".", 1 )[ 0 ] + ".pdf", mime="application/octet-stream")
-        col3, col4 = st.columns([6,6], gap="small")
+        col5, col6 = st.columns([6,6], gap="small")
         #st.subheader('#### Detected Classification Cells are:   ') #,unsafe_allow_html=True)
-        
-        st.markdown("<br>", unsafe_allow_html=True)
-        with col3:
+        #st.markdown("<br>", unsafe_allow_html=True)
+        with col5:
           #st.markdown(TABLE_STYLE, unsafe_allow_html=True)
           st.dataframe(detected_cell_disease_df)
-        with col4:
+        with col6:
           st.dataframe(RBC_status_df)
         st.markdown("<br>", unsafe_allow_html=True)  
-        col5, col6 = st.columns([6,6], gap="small")
-        with col5:
+        col7, col8 = st.columns([6,6], gap="small")
+        with col7:
           st.plotly_chart(bar_chart_fig)        
-        with col6:
+        with col8:
           st.plotly_chart(doughnut_chart_fig)
