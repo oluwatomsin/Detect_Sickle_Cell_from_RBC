@@ -46,18 +46,13 @@ HEADER_STYLE=f"""<style>
 	    color:tomato; 
 	    padding:50;
             }}
-        </style>
-    """
-
-TABLE_STYLE=f"""
-<style>
-table, th, td {{
-  text-align: center !important;
-  padding: 1px !important;
-  border: 2px solid black !important;
-  border-collapse: collapse !important;
-  font-size: large !important;
-}}
+        table, th, td {{
+		text-align: center !important;
+		padding: 1px !important;
+		border: 2px solid black !important;
+		border-collapse: collapse !important;
+		font-size: large !important;
+		}}
 </style>
 """
 
@@ -133,15 +128,15 @@ with st.container():
     uploaded_image_file = st.file_uploader("", type=ALLOWED_EXTENSIONS)
     st.warning(WARNING_MESSAGE, icon="⚠️")
     with st.container():
-        if uploaded_image_file is not None:
+		if uploaded_image_file is not None:
           uploaded_image_filename=uploaded_image_file.name
           imageobj=Image.open(uploaded_image_file)
           model_predict_result=modelpredict(model_obj['model_object'], imageobj, conf_value)
           detected_cell_disease_df=detect_cell_disease(model_predict_result,model_obj['model_labelclass'])
           detected_cell_disease_boundingboxes=display_detected_classes_boundingboxes(imageobj,model_obj['model_object'], model_predict_result)
           RBC_status_df=RBC_status((detected_cell_disease_df/detected_cell_disease_df.sum()).T)
-	  detected_cell_disease_df.reset_index(inplace=True)
-	  detected_cell_disease_df.insert(2, 'Percentage', round(((detected_cell_disease_df['Count']/detected_cell_disease_df['Count'].sum())*100),2))
+		  detected_cell_disease_df.reset_index(inplace=True)
+	      detected_cell_disease_df.insert(2, 'Percentage', round(((detected_cell_disease_df['Count']/detected_cell_disease_df['Count'].sum())*100),2))
           bar_chart_fig=display_bar_chart(detected_cell_disease_df)
           doughnut_chart_fig=display_doughnut_chart(detected_cell_disease_df)
           st.download_button("⬇️ Download Report in PDF",
