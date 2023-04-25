@@ -69,7 +69,7 @@ The aim of this project is to develop and evaluate a object detection model for 
 
 
 ### Data Sources / References
-The model is trained with datasets produced from the following original data sources.
+The model is trained with datasets produced from the following original data sources:
 1. erythrocytesIDB, from http://erythrocytesidb.uib.es/
 2. P. Manescu, C. Bendkowski, R. Claveau, M. Elmi, B.J. Brown, V. Pawar, M. Shaw and D. Fernandez-Reyes, A weakly supervised deep learning approach for detecting malaria and sickle cells in blood films , MICCAI (2020)
 
@@ -79,7 +79,7 @@ This app is not intended to be a substitute for professional medical advice, dia
 
 
 ### Contact
-Can contact at omdenabenin@gmail.com.
+For further information details, can contact omdenabenin@gmail.com.
 ''' 
 
 HOMEPAGE_CHAPTERLEAD='''
@@ -94,7 +94,7 @@ HOMEPAGE_ACTIVE_MEMBERS='''
 | Data Collection and Annotation | - |
 | Exploratory Data Analysis (EDA) | Abir Moula, Jawaher Akther Chowdhury, Jerome Ysrael Endaya, Shnehi K, Ishtiaq Hussain, Monali Deshmukh, Koyal Biswa |
 | Model Development | Pujan shrestha, Amal, Essam Omar, Ishtiaq Hussain, Koyal Biswas |
-| Model Deployment | Amusa Abdulahi tomisin, Amal, Pujan shrestha, Vinod |
+| Model Deployment | Amusa Abdulahi tomisin, Amal, Pujan shrestha, Vinod Cherian |
 '''
 
 st.set_page_config(
