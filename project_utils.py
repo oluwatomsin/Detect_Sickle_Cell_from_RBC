@@ -52,7 +52,7 @@ def generate_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_t
       .imagesize{{height: {image_height}px; width: {image_width}px; margin: 0 auto;}}  
       .barchartsize{{height: {bar_chart_height}px; width: {bar_chart_width}px; margin: 0 auto;}} 
       .doughnutchartsize{{height: {doughnut_chart_height}px; width: {doughnut_chart_width}px; margin: 0 auto;}} 
-      table,th,td{{text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"}}
+       table,th,td{{text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"}}
       .column {{float: left; width: 50%; }}
       .row:after {{ content: ""; display: table; clear: both; }}
       ''')
@@ -90,12 +90,6 @@ def generate_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_t
 <title></title>
 </head>
 <body>
-<div style="padding:0px; margin:0px; text-align:center;">
-<div class="row">
-<p>⚠️
-Disclaimer: This app is not intended to be a substitute for professional medical advice, diagnosis, or treatment. The predictions and information provided by the app are for educational and informational purposes only. The predictions are based on a model and may not always be accurate. Users should consult with a qualified healthcare provider before making any decisions based on the apps predictions or information.
-</p>
-</div>
 <div class="row">
   <div class="column">
   <span style="font-size:20px; font-weight:bold">Uploaded Image</span>
@@ -113,17 +107,18 @@ Disclaimer: This app is not intended to be a substitute for professional medical
 <div class="row"> 
 <span style="font-size:20px; font-weight:bold">Total diagnose detected classified cells are: {cell_disease_table['Count'].sum()}</span>
 </div>
+  <br>
+  <br>
+<div class="row"> 
+  <span style="font-size:20px; font-weight:bold">Detected cells details</span>
+</div>
+  <br>
+  <br>  
 <div class="row">
   <div class="column">
-  <span style="font-size:20px; font-weight:bold">Detected cells details</span>
-  <br>
-  <br>
   {cell_disease_table_str}
   </div>
   <div class="column">
-  <span style="font-size:20px; font-weight:bold">sample test</span>
-  <br>
-  <br>
   {RBC_status_table_str}
   </div>               
 </div>   
