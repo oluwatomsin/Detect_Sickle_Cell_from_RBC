@@ -73,7 +73,7 @@ def generate_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_t
     RBC_status_table_str+=f'<td>{row["HbA"]}</td>'
     RBC_status_table_str+=f'<td>{row["HbS"]}</td>'
     RBC_status_table_str+=f'<td>{row["HbC"]}</td>'
-    RBC_status_table_str+=f'<td>{row["status"]}</td></tr>'
+    RBC_status_table_str+=f'<td>{row["Status"]}</td></tr>'
 
   for index, row in cell_disease_table.iterrows():
     cell_disease_table_str+=f'<tr><td>{str(index+1)}</td>'
