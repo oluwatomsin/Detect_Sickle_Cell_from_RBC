@@ -83,15 +83,40 @@ def display_detected_classes_boundingboxes(imageobj,model_object,model_result):
   return render_result(imageobj,model=model_object,result=model_result[0])
   
 def display_bar_chart(table_df):
-    return px.bar(table_df, x="Classes", y="Count", color="Classes", orientation="v", hover_name="Classes",
+    return px.bar(table_df, x="Classes", y="Count", color="Classes", orientation="v", hover_name="Classes", width=400, height=300,
             color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"],
              title="Detected Diseases Cells in RBC"
              )
 
 def display_doughnut_chart(table_df):
-    return px.pie(table_df, values='Percentage', names='Classes', title='Pie Chart of Percentage as per their classes', hover_data=['Count'], hole=0.4, color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"])
+    return px.pie(table_df, values='Percentage', names='Classes', width=400, height=300, title='Pie Chart of Percentage as per their classes', hover_data=['Count'], hole=0.4, color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"])
     
-
+def RBC_statuts(RBCpercent): # RBC is given as DataFrame
+  RBCpercent=RBCpercent[['Crystal', 'Normal', 'Others', 'Sickle', 'Target']]
+  Crystal,N,Other,S,Target=RBCpercent.values[0]
+  if Target*Crystal>0 and Crystal+Target>0.3 :
+    C=Target+Crystal
+  else:
+    C=0
+    N=N+Target+Crystal
+  NO =N+Other
+  HbDB=pd.DataFrame({"HbA":NO,"HbS":S,"HbC":C},index=["SCD statut"])
+  if N>0.9 or S+C< 0.03 : 
+   Stat="AA"
+  elif NO>=0.3 and S>0.03 and S>=C :
+   Stat="AS"
+  elif NO>=0.3 and C>0.03 : 
+   Stat="AC"
+  elif C>0.85 : 
+   Stat="CC"
+  elif S>0.85 : 
+   Stat="SS"
+  elif C>=0.4 and S>=0.4 : 
+   Stat="SC"
+  else :
+   Stat="Non determined"
+  HbDB["Statut"]=Stat
+  return HbDB
 
     
 model_obj = get_model(os.path.abspath(MODEL_PATH))
