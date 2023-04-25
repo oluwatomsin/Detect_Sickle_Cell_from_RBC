@@ -80,46 +80,46 @@ def generate_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_t
 <title></title>
 </head>
 <body>
-<div class="row">
-  <div class="column">
+<div style='content: ""; display: table; clear: both;'>
+  <div style='float: left; width: 50%;'>
   <span style="font-size:20px; font-weight:bold">Uploaded Image</span>
   <br>
   <br>
   <img class="imagesize" src="data:image/png;base64,{uploaded_image}" alt="uploaded image" />
   </div>
-  <div class="column">
+  <div style='float: left; width: 50%;'>
   <span style="font-size:20px; font-weight:bold">Diagnose disease cells</span>
   <br>     
   <br>
   <img class="imagesize" src="data:image/png;base64,{bounding_image}" alt="predicted image" />
   </div>
 </div>
-<div class="row"> 
+<div style='content: ""; display: table; clear: both;'> 
 <span style="font-size:20px; font-weight:bold">Total diagnose detected classified cells are: {cell_disease_table['Count'].sum()}</span>
 </div>
   <br>
   <br>
-<div class="row"> 
+<div style='content: ""; display: table; clear: both;'> 
   <span style="font-size:20px; font-weight:bold">Detected cells details</span>
 </div>
   <br>
   <br>  
-<div class="row">
-  <div class="column">
+<div style='content: ""; display: table; clear: both;'>
+  <div style='float: left; width: 50%;'>
   {cell_disease_table_str}
   </div>
-  <div class="column">
+  <div style='float: left; width: 50%;'>
   {RBC_status_table_str}
   </div>               
 </div>   
-<div class="row">
+<div style='content: ""; display: table; clear: both;'>
   <span style="font-size:20px; font-weight:bold">Analysis of detected diseases cells</span>
 </div>
-<div class="row">
+<div style='content: ""; display: table; clear: both;'>
   <br>              
   <img class="barchartsize" src="data:image/png;base64,{bar_chart}"  alt="bar chart image"  />         
 </div>   
-<div class="row">
+<div style='content: ""; display: table; clear: both;'>
   <br>
   <img class="doughnutchartsize" src="data:image/png;base64,{doughnut_chart}" alt="doughnut chart image" />
 </div>
