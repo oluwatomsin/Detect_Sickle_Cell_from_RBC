@@ -81,13 +81,12 @@ def display_detected_classes_boundingboxes(imageobj,model_object,model_result):
   return render_result(imageobj,model=model_object,result=model_result[0])
   
 def display_bar_chart(table_df):
-    return px.bar(table_df, x="Classes", y="Count", color="Classes", orientation="v", hover_name="Classes", width=400, height=400,
+  return px.bar(table_df, x="Classes", y="Count", color="Classes", orientation="v", hover_name="Classes", width=400, height=400,
             color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"],
-             title="Detected Diseases Cells in RBC"
-             )
+             title="Detected Diseases Cells in RBC")
 
 def display_doughnut_chart(table_df):
-    return px.pie(table_df, values='Percentage', names='Classes', width=400, height=400, title='Pie Chart of Percentage as per their classes', hover_data=['Count'], hole=0.4, color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"])
+  return px.pie(table_df, values='Percentage', names='Classes', width=400, height=400, title='Pie Chart of Percentage as per their classes', hover_data=['Count'], hole=0.4, color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"])
     
 def RBC_status(RBCpercent): # RBC is given as DataFrame
   RBCpercent=RBCpercent[['Crystal', 'Normal', 'Others', 'Sickle', 'Target']]
@@ -128,39 +127,39 @@ with st.container():
     uploaded_image_file = st.file_uploader("", type=ALLOWED_EXTENSIONS)
     st.warning(WARNING_MESSAGE, icon="⚠️")
     with st.container():
-		if uploaded_image_file is not None:
-          uploaded_image_filename=uploaded_image_file.name
-          imageobj=Image.open(uploaded_image_file)
-          model_predict_result=modelpredict(model_obj['model_object'], imageobj, conf_value)
-          detected_cell_disease_df=detect_cell_disease(model_predict_result,model_obj['model_labelclass'])
-          detected_cell_disease_boundingboxes=display_detected_classes_boundingboxes(imageobj,model_obj['model_object'], model_predict_result)
-          RBC_status_df=RBC_status((detected_cell_disease_df/detected_cell_disease_df.sum()).T)
-		  detected_cell_disease_df.reset_index(inplace=True)
+		  if uploaded_image_file is not None:
+        uploaded_image_filename=uploaded_image_file.name
+        imageobj=Image.open(uploaded_image_file)
+        model_predict_result=modelpredict(model_obj['model_object'], imageobj, conf_value)
+        detected_cell_disease_df=detect_cell_disease(model_predict_result,model_obj['model_labelclass'])
+        detected_cell_disease_boundingboxes=display_detected_classes_boundingboxes(imageobj,model_obj['model_object'], model_predict_result)
+        RBC_status_df=RBC_status((detected_cell_disease_df/detected_cell_disease_df.sum()).T)
+		    detected_cell_disease_df.reset_index(inplace=True)
 	      detected_cell_disease_df.insert(2, 'Percentage', round(((detected_cell_disease_df['Count']/detected_cell_disease_df['Count'].sum())*100),2))
-          bar_chart_fig=display_bar_chart(detected_cell_disease_df)
-          doughnut_chart_fig=display_doughnut_chart(detected_cell_disease_df)
-          st.download_button("⬇️ Download Report in PDF",
-                  data=download_pdf(imageobj, detected_cell_disease_boundingboxes,detected_cell_disease_df, bar_chart_fig, doughnut_chart_fig,WIDTH,HEIGHT),
-                  file_name= uploaded_image_filename.rsplit( ".", 1 )[ 0 ] + ".pdf", mime="application/octet-stream")
-          col1, col2 = st.columns([6,6], gap="small")
-          with col1:
-              st.markdown('### **Uploaded Image**',unsafe_allow_html=True)
-              st.image(imageobj,width=WIDTH)  #300 #640
-          with col2:
-              st.markdown('### **Diagnose disease cells on uploaded image**',unsafe_allow_html=True)
-              st.image(detected_cell_disease_boundingboxes, width=WIDTH) 
-          col3, col4 = st.columns([6,6], gap="small")
-          #st.subheader('#### Detected Classification Cells are:   ') #,unsafe_allow_html=True)
-          st.subheader(f"Total detected classified cells are: {detected_cell_disease_df['Count'].sum()}")
-          st.markdown("<br>", unsafe_allow_html=True)
-          with col3:
-            #st.markdown(TABLE_STYLE, unsafe_allow_html=True)
-            st.dataframe(detected_cell_disease_df)
-          with col4:
-            st.dataframe(RBC_status_df)
-          st.markdown("<br>", unsafe_allow_html=True)  
-          col5, col6 = st.columns([9,3], gap="small")
-          with col5:
-            st.plotly_chart(bar_chart_fig)        
-          with col6:
-            st.plotly_chart(doughnut_chart_fig)
+        bar_chart_fig=display_bar_chart(detected_cell_disease_df)
+        doughnut_chart_fig=display_doughnut_chart(detected_cell_disease_df)
+        st.download_button("⬇️ Download Report in PDF",
+                    data=download_pdf(imageobj, detected_cell_disease_boundingboxes,detected_cell_disease_df, bar_chart_fig, doughnut_chart_fig,WIDTH,HEIGHT),
+                    file_name= uploaded_image_filename.rsplit( ".", 1 )[ 0 ] + ".pdf", mime="application/octet-stream")
+        col1, col2 = st.columns([6,6], gap="small")
+        with col1:
+          st.markdown('### **Uploaded Image**',unsafe_allow_html=True)
+          st.image(imageobj,width=WIDTH)  #300 #640
+        with col2:
+          st.markdown('### **Diagnose disease cells on uploaded image**',unsafe_allow_html=True)
+          st.image(detected_cell_disease_boundingboxes, width=WIDTH) 
+        col3, col4 = st.columns([6,6], gap="small")
+        #st.subheader('#### Detected Classification Cells are:   ') #,unsafe_allow_html=True)
+        st.subheader(f"Total detected classified cells are: {detected_cell_disease_df['Count'].sum()}")
+        st.markdown("<br>", unsafe_allow_html=True)
+        with col3:
+          #st.markdown(TABLE_STYLE, unsafe_allow_html=True)
+          st.dataframe(detected_cell_disease_df)
+        with col4:
+          st.dataframe(RBC_status_df)
+        st.markdown("<br>", unsafe_allow_html=True)  
+        col5, col6 = st.columns([9,3], gap="small")
+        with col5:
+          st.plotly_chart(bar_chart_fig)        
+        with col6:
+          st.plotly_chart(doughnut_chart_fig)
