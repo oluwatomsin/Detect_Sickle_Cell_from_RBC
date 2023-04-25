@@ -80,6 +80,7 @@ with st.container():
         st.markdown(HEADER_STYLE, unsafe_allow_html=True)
         st.title(PAGE_TITLE)
 with st.container():
+    st.markdown("<br>", unsafe_allow_html=True)	
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown(HOMEPAGE_CHAPTERLEAD, unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
