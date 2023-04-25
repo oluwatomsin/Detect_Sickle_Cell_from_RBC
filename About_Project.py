@@ -91,7 +91,7 @@ HOMEPAGE_CHAPTERLEAD='''
 HOMEPAGE_ACTIVE_MEMBERS='''
 | Task Name | Active Members |
 |--|--|
-| Data Collection and Annotation | - |
+| Data Collection and Annotation | Aniket Aher, Amusa Abdulahi tomisin, Aishwarya Meyyappan, Ishtiaq Hussain, Amal Altalhi, Abhishek Patro, Shnehi K, Jerome Ysrael Endaya, Koyal Biswas, Monali Deshmukh, Jawaher Akther Chowdhury, Dr Divakar Singh, Aruna, Pujan Shrestha, Anil Kumar H R |
 | Exploratory Data Analysis (EDA) | Abir Moula, Jawaher Akther Chowdhury, Jerome Ysrael Endaya, Shnehi K, Ishtiaq Hussain, Monali Deshmukh, Koyal Biswa |
 | Model Development | Pujan shrestha, Amal Altalhi, Essam Omar, Ishtiaq Hussain, Koyal Biswas |
 | Model Deployment | Amusa Abdulahi tomisin, Amal Altalhi, Pujan shrestha, Vinod Cherian |
