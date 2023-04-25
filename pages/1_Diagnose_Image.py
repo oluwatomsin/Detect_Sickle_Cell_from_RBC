@@ -23,9 +23,9 @@ ALLOWED_EXTENSIONS = ["jpg","jpeg","png"]
 
 WARNING_MESSAGE='Disclaimer: This app is not intended to be a substitute for professional medical advice, diagnosis, or treatment. The predictions and information provided by the app are for educational and informational purposes only. The predictions are based on a model and may not always be accurate. Users should consult with a qualified healthcare provider before making any decisions based on the app''s predictions or information.'
 
-WIDTH=300
+WIDTH=380
 
-HEIGHT=300
+HEIGHT=380
 
 #PAGE_TITLE="Diagnose Sickle Cell Diseases by Red Blood Cells(RBCs) Classification"
 
@@ -46,7 +46,7 @@ HEADER_STYLE=f"""<style>
 	    color:tomato; 
 	    padding:50;
             }}
-        table, th, td {{
+    table, th, td {{
 		text-align: center !important;
 		padding: 1px !important;
 		border: 2px solid black !important;
@@ -147,10 +147,11 @@ with st.container():
           st.image(imageobj,width=WIDTH)  #300 #640
         with col2:
           st.markdown('### **Diagnose disease cells on uploaded image**',unsafe_allow_html=True)
-          st.image(detected_cell_disease_boundingboxes, width=WIDTH) 
+          st.image(detected_cell_disease_boundingboxes, width=WIDTH)
+        st.subheader(f"Total detected classified cells are: {detected_cell_disease_df['Count'].sum()}")
         col3, col4 = st.columns([6,6], gap="small")
         #st.subheader('#### Detected Classification Cells are:   ') #,unsafe_allow_html=True)
-        st.subheader(f"Total detected classified cells are: {detected_cell_disease_df['Count'].sum()}")
+        
         st.markdown("<br>", unsafe_allow_html=True)
         with col3:
           #st.markdown(TABLE_STYLE, unsafe_allow_html=True)
