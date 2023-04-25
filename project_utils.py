@@ -7,8 +7,8 @@ import plotly
 import plotly.express as px
 from weasyprint import HTML,CSS
 
-def convert_chart_fig_to_bytes(chart_fig, width, height):    
-    return plotly.io.to_image(chart_fig, format=None, width=width, height=height, scale=None, validate=True, engine='kaleido')
+def convert_chart_fig_to_bytes(chart_fig, width, height):
+  return plotly.io.to_image(chart_fig, format=None, width=width, height=height, scale=None, validate=True, engine='kaleido')
     
 #def encode_to_base64(varobj):
 #    return base64.b64encode(varobj)
@@ -34,13 +34,24 @@ def encode_PIL_Image_to_base64(imgobj):
   return im_b64.decode('utf-8')
 
 def encode_base64_from_bytes(bytesobj):
-    return base64.b64encode(bytesobj).decode('utf-8')
-    #<img src="data:image/png;base64,{encode_base64_from_bytes(convert_chart_fig_to_bytes(chart_fig, width, height))}" alt="Red dot" />
+  return base64.b64encode(bytesobj).decode('utf-8')
     
 def download_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_table, bar_chart, doughnut_chart,width,height):
-    return generate_pdf(encode_PIL_Image_to_base64(uploaded_image), encode_PIL_Image_to_base64(bounding_image),cell_disease_table, RBC_status_table, encode_base64_from_bytes(convert_chart_fig_to_bytes(bar_chart, width, height)), encode_base64_from_bytes(convert_chart_fig_to_bytes(doughnut_chart, width, height)))
+  return generate_pdf(encode_PIL_Image_to_base64(uploaded_image), encode_PIL_Image_to_base64(bounding_image),cell_disease_table, RBC_status_table, encode_base64_from_bytes(convert_chart_fig_to_bytes(bar_chart, width, height)), encode_base64_from_bytes(convert_chart_fig_to_bytes(doughnut_chart, width, height)))
 
 def generate_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_table, bar_chart, doughnut_chart):
+
+  css=CSS(string=f'''@page {{size: Letter; margin: 0.1in 0.1in 0in 0.1in;}}
+      img {{border: 5px solid #555;}}
+      body{{display: block; margin: 0px;}}
+      .imagesize{{height: {image_height}px; width: {image_width}px; margin: 0 auto;}}  
+      .barchartsize{{height: {bar_chart_height}px; width: {bar_chart_width}px; margin: 0 auto;}} 
+      .doughnutchartsize{{height: {doughnut_chart_height}px; width: {doughnut_chart_width}px; margin: 0 auto;}} 
+      table,th,td{{text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"}}
+      .column {{float: left; width: 50%; }}
+      .row:after {{ content: ""; display: table; clear: both; }}
+      ''')
+
   cell_disease_table_str='<table><tr>'
   RBC_status_table_str='<table><tr>'
 
@@ -126,16 +137,4 @@ Disclaimer: This app is not intended to be a substitute for professional medical
 </body>
 </html>
 """
-
-css=CSS(string=f'''@page {{size: Letter; margin: 0.1in 0.1in 0in 0.1in;}}
-img {{border: 5px solid #555;}}
-body{{display: block; margin: 0px;}}
-.imagesize{{height: {image_height}px; width: {image_width}px; margin: 0 auto;}}  
-.barchartsize{{height: {bar_chart_height}px; width: {bar_chart_width}px; margin: 0 auto;}} 
-.doughnutchartsize{{height: {doughnut_chart_height}px; width: {doughnut_chart_width}px; margin: 0 auto;}} 
-table,th,td{{text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"}}
-.column {{float: left; width: 50%; }}
-.row:after {{ content: ""; display: table; clear: both; }}
-''')
-
   return HTML(string=HTML_TEMPLATE).write_pdf(optimize_size=(), stylesheets=[css])
