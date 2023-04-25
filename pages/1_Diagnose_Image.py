@@ -144,7 +144,7 @@ with st.container():
           st.markdown('### **Uploaded Image**',unsafe_allow_html=True)
           st.image(imageobj,width=WIDTH)  #300 #640
         with col2:
-          st.markdown('### **Diagnose disease cells **',unsafe_allow_html=True)
+          st.markdown('### **Diagnose disease cells**',unsafe_allow_html=True)
           st.image(detected_cell_disease_boundingboxes, width=WIDTH)
         st.subheader(f"Total detected classified cells are: {detected_cell_disease_df['Count'].sum()}")
         st.download_button("⬇️ Download Report in PDF",
