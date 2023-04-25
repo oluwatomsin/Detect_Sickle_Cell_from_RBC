@@ -94,7 +94,7 @@ def display_bar_chart(table_df):
 def display_doughnut_chart(table_df):
     return px.pie(table_df, values='Percentage', names='Classes', width=400, height=400, title='Pie Chart of Percentage as per their classes', hover_data=['Count'], hole=0.4, color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"])
     
-def RBC_statuts(RBCpercent): # RBC is given as DataFrame
+def RBC_status(RBCpercent): # RBC is given as DataFrame
   RBCpercent=RBCpercent[['Crystal', 'Normal', 'Others', 'Sickle', 'Target']]
   Crystal,N,Other,S,Target=RBCpercent.values[0]
   if Target*Crystal>0 and Crystal+Target>0.3 :
@@ -103,22 +103,22 @@ def RBC_statuts(RBCpercent): # RBC is given as DataFrame
     C=0
     N=N+Target+Crystal
   NO =N+Other
-  HbDB=pd.DataFrame({"HbA":NO,"HbS":S,"HbC":C},index=["SCD statut"])
+  HbDB=pd.DataFrame({"HbA":NO,"HbS":S,"HbC":C},index=["SCD status"])
   if N>0.9 or S+C< 0.03 : 
-   Stat="AA"
+   stat="AA"
   elif NO>=0.3 and S>0.03 and S>=C :
-   Stat="AS"
+   stat="AS"
   elif NO>=0.3 and C>0.03 : 
-   Stat="AC"
+   stat="AC"
   elif C>0.85 : 
-   Stat="CC"
+   stat="CC"
   elif S>0.85 : 
-   Stat="SS"
+   stat="SS"
   elif C>=0.4 and S>=0.4 : 
-   Stat="SC"
+   stat="SC"
   else :
-   Stat="Non determined"
-  HbDB["Statut"]=Stat
+   stat="Non determined"
+  HbDB["status"]=stat
   return HbDB
 
     
@@ -143,34 +143,34 @@ with st.container():
           detected_cell_disease_df.reset_index(inplace=True)
           detected_cell_disease_df.insert(2, 'Percentage', round(((detected_cell_disease_df['Count']/detected_cell_disease_df['Count'].sum())*100),2))
           
+          RBC_status_df=RBC_status((detected_cell_disease_df/detected_cell_disease_df.sum()).T)
           bar_chart_fig=display_bar_chart(detected_cell_disease_df)
           
           doughnut_chart_fig=display_doughnut_chart(detected_cell_disease_df)
           
-          
+          st.download_button("⬇️ Download Report in PDF",
+                  data=download_pdf(imageobj, detected_cell_disease_boundingboxes,detected_cell_disease_df, bar_chart_fig, doughnut_chart_fig,WIDTH,HEIGHT),
+                  file_name= uploaded_image_filename.rsplit( ".", 1 )[ 0 ] + ".pdf", mime="application/octet-stream")
+
           col1, col2 = st.columns([6,6], gap="small")
           with col1:
               st.markdown('### **Uploaded Image**',unsafe_allow_html=True)
               st.image(imageobj,width=WIDTH)  #300 #640
           with col2:
-              st.markdown('### **Predict disease cells on uploaded image**',unsafe_allow_html=True)
+              st.markdown('### **Diagnose disease cells on uploaded image**',unsafe_allow_html=True)
               st.image(detected_cell_disease_boundingboxes, width=WIDTH) 
           col3, col4 = st.columns([6,6], gap="small")
+          #st.subheader('#### Detected Classification Cells are:   ') #,unsafe_allow_html=True)
+          st.subheader(f"Total detected classified cells are: {detected_cell_disease_df['Count'].sum()}")
+          st.markdown("<br>", unsafe_allow_html=True)
           with col3:
-              st.markdown(TABLE_STYLE, unsafe_allow_html=True)
-              st.markdown('## Detected Classification Cells are:   ',unsafe_allow_html=True)
-              st.markdown("<br>", unsafe_allow_html=True)
-              st.write(f"Total detected {detected_cell_disease_df['Count'].sum()}")
-              st.markdown("<br>", unsafe_allow_html=True)
-              #st.table(detected_cell_disease_df)
-              st.dataframe(detected_cell_disease_df)
-              st.markdown("<br>", unsafe_allow_html=True)
+            #st.markdown(TABLE_STYLE, unsafe_allow_html=True)
+            st.dataframe(detected_cell_disease_df)
           with col4:
-                  st.plotly_chart(bar_chart_fig)
+            st.dataframe(RBC_status_df)
+          st.markdown("<br>", unsafe_allow_html=True)  
           col5, col6 = st.columns([9,3], gap="small")
           with col5:
-                  st.plotly_chart(doughnut_chart_fig)
+            st.plotly_chart(bar_chart_fig)        
           with col6:
-              st.download_button("⬇️ Generate & Download Report in PDF",
-                  data=download_pdf(imageobj, detected_cell_disease_boundingboxes,detected_cell_disease_df, bar_chart_fig, doughnut_chart_fig,WIDTH,HEIGHT),
-                  file_name= uploaded_image_filename.rsplit( ".", 1 )[ 0 ] + ".pdf", mime="application/octet-stream")
+            st.plotly_chart(doughnut_chart_fig)
