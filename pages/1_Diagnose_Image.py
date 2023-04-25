@@ -127,7 +127,7 @@ with st.container():
     uploaded_image_file = st.file_uploader("", type=ALLOWED_EXTENSIONS)
     st.warning(WARNING_MESSAGE, icon="⚠️")
     with st.container():
-		  if uploaded_image_file is not None:
+      if uploaded_image_file is not None:
         uploaded_image_filename=uploaded_image_file.name
         imageobj=Image.open(uploaded_image_file)
         model_predict_result=modelpredict(model_obj['model_object'], imageobj, conf_value)
