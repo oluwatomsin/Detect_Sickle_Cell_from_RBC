@@ -139,21 +139,14 @@ with st.container():
           model_predict_result=modelpredict(model_obj['model_object'], imageobj, conf_value)
           detected_cell_disease_df=detect_cell_disease(model_predict_result,model_obj['model_labelclass'])
           detected_cell_disease_boundingboxes=display_detected_classes_boundingboxes(imageobj,model_obj['model_object'], model_predict_result)
-          
           RBC_status_df=RBC_status((detected_cell_disease_df/detected_cell_disease_df.sum()).T)
-          
 	  detected_cell_disease_df.reset_index(inplace=True)
 	  detected_cell_disease_df.insert(2, 'Percentage', round(((detected_cell_disease_df['Count']/detected_cell_disease_df['Count'].sum())*100),2))
-          
-
           bar_chart_fig=display_bar_chart(detected_cell_disease_df)
-          
           doughnut_chart_fig=display_doughnut_chart(detected_cell_disease_df)
-          
           st.download_button("⬇️ Download Report in PDF",
                   data=download_pdf(imageobj, detected_cell_disease_boundingboxes,detected_cell_disease_df, bar_chart_fig, doughnut_chart_fig,WIDTH,HEIGHT),
                   file_name= uploaded_image_filename.rsplit( ".", 1 )[ 0 ] + ".pdf", mime="application/octet-stream")
-
           col1, col2 = st.columns([6,6], gap="small")
           with col1:
               st.markdown('### **Uploaded Image**',unsafe_allow_html=True)
