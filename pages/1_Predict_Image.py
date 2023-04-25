@@ -31,9 +31,9 @@ HEIGHT=300
 
 HEADER_STYLE=f"""<style>
  	    [data-testid="stToolbar"]{{
+	    top: -50px;
 	    visibility: hidden;
-	    
-	    }}
+	    }}			
             footer {{
             visibility: hidden;
             position: relative;
@@ -41,7 +41,10 @@ HEADER_STYLE=f"""<style>
             footer:before {{
             visibility: visible;
             position: relative;
-	          content: "Project by Omdena Benin Chapter - {date.today().year}"
+	    content: "Project by Omdena Benin Chapter - {date.today().year}";
+	    display:block;
+	    color:tomato; 
+	    padding:50;
             }}
         </style>
     """
@@ -83,13 +86,13 @@ def display_detected_classes_boundingboxes(imageobj,model_object,model_result):
   return render_result(imageobj,model=model_object,result=model_result[0])
   
 def display_bar_chart(table_df):
-    return px.bar(table_df, x="Classes", y="Count", color="Classes", orientation="v", hover_name="Classes", width=400, height=300,
+    return px.bar(table_df, x="Classes", y="Count", color="Classes", orientation="v", hover_name="Classes", width=400, height=400,
             color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"],
              title="Detected Diseases Cells in RBC"
              )
 
 def display_doughnut_chart(table_df):
-    return px.pie(table_df, values='Percentage', names='Classes', width=400, height=300, title='Pie Chart of Percentage as per their classes', hover_data=['Count'], hole=0.4, color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"])
+    return px.pie(table_df, values='Percentage', names='Classes', width=400, height=400, title='Pie Chart of Percentage as per their classes', hover_data=['Count'], hole=0.4, color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"])
     
 def RBC_statuts(RBCpercent): # RBC is given as DataFrame
   RBCpercent=RBCpercent[['Crystal', 'Normal', 'Others', 'Sickle', 'Target']]
