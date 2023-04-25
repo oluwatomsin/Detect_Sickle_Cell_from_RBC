@@ -68,9 +68,18 @@ The motivation for creating such a diagnosis tool for SCD is to address the unme
 The aim of this project is to develop and evaluate a object detection model for the diagnosis of sickle cell disease using peripheral blood smear images. Sickle cell disease is a genetic disorder that affects the shape and function of red blood cells, causing various complications such as anemia, infections, pain crises, and organ damage. Current methods for diagnosing sickle cell disease are invasive, time-consuming, and require specialized equipment and trained personnel. A YOLO model is a deep learning technique that can detect and classify objects in images with high accuracy and speed. By using a YOLO model, we hope to achieve a fast, accurate, and non-invasive diagnosis of sickle cell disease that can be deployed in low-resource settings.
 
 
+### Data Sources / References
+The model is trained with datasets produced from the following original data sources.
+1. erythrocytesIDB, from http://erythrocytesidb.uib.es/
+2. P. Manescu, C. Bendkowski, R. Claveau, M. Elmi, B.J. Brown, V. Pawar, M. Shaw and D. Fernandez-Reyes, A weakly supervised deep learning approach for detecting malaria and sickle cells in blood films , MICCAI (2020)
+
+
 ### Disclaimer
 This app is not intended to be a substitute for professional medical advice, diagnosis, or treatment. The predictions and information provided by the app are for educational and informational purposes only. The predictions are based on a model and may not always be accurate. Users should consult with a qualified healthcare provider before making any decisions based on the app's predictions or information.
 
+
+### Contact
+Can contact at omdenabenin@gmail.com.
 ''' 
 
 HOMEPAGE_CHAPTERLEAD='''
