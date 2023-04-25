@@ -37,7 +37,7 @@ def encode_base64_from_bytes(bytesobj):
   return base64.b64encode(bytesobj).decode('utf-8')
     
 def download_pdf(uploaded_image, bounding_image, cell_disease_table, RBC_status_table, bar_chart, doughnut_chart, width, height):
-  return generate_pdf(encode_PIL_Image_to_base64(uploaded_image), encode_PIL_Image_to_base64(bounding_image), cell_disease_table, RBC_status_table, encode_base64_from_bytes(convert_chart_fig_to_bytes(bar_chart, width, height)), encode_base64_from_bytes(convert_chart_fig_to_bytes(doughnut_chart, width, height)))
+  return generate_pdf(encode_PIL_Image_to_base64(uploaded_image), encode_PIL_Image_to_base64(bounding_image), cell_disease_table, RBC_status_table, encode_base64_from_bytes(convert_chart_fig_to_bytes(bar_chart, width, height)), encode_base64_from_bytes(convert_chart_fig_to_bytes(doughnut_chart, width, height)), width, height)
 
 def generate_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_table, bar_chart, doughnut_chart, width, height):
   image_height=height
