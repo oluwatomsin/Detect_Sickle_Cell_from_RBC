@@ -138,17 +138,18 @@ with st.container():
         detected_cell_disease_df.insert(2, 'Percentage', round(((detected_cell_disease_df['Count']/detected_cell_disease_df['Count'].sum())*100),2))
         bar_chart_fig=display_bar_chart(detected_cell_disease_df)
         doughnut_chart_fig=display_doughnut_chart(detected_cell_disease_df)
-        st.download_button("⬇️ Download Report in PDF",
-                    data=download_pdf(imageobj, detected_cell_disease_boundingboxes,detected_cell_disease_df, bar_chart_fig, doughnut_chart_fig,WIDTH,HEIGHT),
-                    file_name= uploaded_image_filename.rsplit( ".", 1 )[ 0 ] + ".pdf", mime="application/octet-stream")
+        
         col1, col2 = st.columns([6,6], gap="small")
         with col1:
           st.markdown('### **Uploaded Image**',unsafe_allow_html=True)
           st.image(imageobj,width=WIDTH)  #300 #640
         with col2:
-          st.markdown('### **Diagnose disease cells on uploaded image**',unsafe_allow_html=True)
+          st.markdown('### **Diagnose disease cells **',unsafe_allow_html=True)
           st.image(detected_cell_disease_boundingboxes, width=WIDTH)
         st.subheader(f"Total detected classified cells are: {detected_cell_disease_df['Count'].sum()}")
+        st.download_button("⬇️ Download Report in PDF",
+                    data=download_pdf(imageobj, detected_cell_disease_boundingboxes,detected_cell_disease_df, bar_chart_fig, doughnut_chart_fig,WIDTH,HEIGHT),
+                    file_name= uploaded_image_filename.rsplit( ".", 1 )[ 0 ] + ".pdf", mime="application/octet-stream")
         col3, col4 = st.columns([6,6], gap="small")
         #st.subheader('#### Detected Classification Cells are:   ') #,unsafe_allow_html=True)
         
@@ -159,7 +160,7 @@ with st.container():
         with col4:
           st.dataframe(RBC_status_df)
         st.markdown("<br>", unsafe_allow_html=True)  
-        col5, col6 = st.columns([9,3], gap="small")
+        col5, col6 = st.columns([6,6], gap="small")
         with col5:
           st.plotly_chart(bar_chart_fig)        
         with col6:
