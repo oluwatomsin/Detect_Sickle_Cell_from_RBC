@@ -85,11 +85,13 @@ def display_detected_classes_boundingboxes(imageobj,model_object,model_result):
   
 def display_bar_chart(table_df):
   return px.bar(table_df, x="Classes", y="Count", color="Classes", orientation="v", hover_name="Classes", width=400, height=400,
-            color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"],
-             title="Detected Diseases Cells in RBC")
+            #title="Detected Diseases Cells in RBC",
+            color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"])
 
 def display_doughnut_chart(table_df):
-  return px.pie(table_df, values='Percentage', names='Classes', width=400, height=400, title='Pie Chart of Percentage as per their classes', hover_data=['Count'], hole=0.4, color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"])
+  return px.pie(table_df, values='Percentage', names='Classes', width=400, height=400, 
+  #title='Pie Chart of Percentage as per their classes', 
+  hover_data=['Count'], hole=0.4, color_discrete_sequence=["blue", "orange", "red", "green","yellow", "purple","pink","violet","maroon","olive","teal","cyan","brown"])
     
 def RBC_status(RBCpercent): # RBC is given as DataFrame
   RBCpercent=RBCpercent[['Crystal', 'Normal', 'Others', 'Sickle', 'Target']]
@@ -154,8 +156,10 @@ with st.container():
           st.subheader(f"Total detected classified cells are: {detected_cell_disease_df['Count'].sum()}")
         with col4:
           st.download_button("⬇️ Download Report in PDF",
-                    data=download_pdf(imageobj, detected_cell_disease_boundingboxes,detected_cell_disease_df, bar_chart_fig, doughnut_chart_fig,WIDTH,HEIGHT),
+                    data=download_pdf(imageobj, detected_cell_disease_boundingboxes,detected_cell_disease_df, RBC_status_df, bar_chart_fig, doughnut_chart_fig,WIDTH,HEIGHT),
                     file_name= uploaded_image_filename.rsplit( ".", 1 )[ 0 ] + ".pdf", mime="application/octet-stream")
+        
+        st.subheader("Analysis of detected diseases cells")
         col5, col6 = st.columns([6,6], gap="small")
         #st.subheader('#### Detected Classification Cells are:   ') #,unsafe_allow_html=True)
         #st.markdown("<br>", unsafe_allow_html=True)

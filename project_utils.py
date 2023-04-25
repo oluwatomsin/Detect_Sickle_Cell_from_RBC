@@ -37,69 +37,105 @@ def encode_base64_from_bytes(bytesobj):
     return base64.b64encode(bytesobj).decode('utf-8')
     #<img src="data:image/png;base64,{encode_base64_from_bytes(convert_chart_fig_to_bytes(chart_fig, width, height))}" alt="Red dot" />
     
-def download_pdf(uploaded_image, bounding_image,cell_disease_table, bar_chart, doughnut_chart,width,height):
-    return generate_pdf(encode_PIL_Image_to_base64(uploaded_image), encode_PIL_Image_to_base64(bounding_image),cell_disease_table, encode_base64_from_bytes(convert_chart_fig_to_bytes(bar_chart, width, height)), encode_base64_from_bytes(convert_chart_fig_to_bytes(doughnut_chart, width, height)))
+def download_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_table, bar_chart, doughnut_chart,width,height):
+    return generate_pdf(encode_PIL_Image_to_base64(uploaded_image), encode_PIL_Image_to_base64(bounding_image),cell_disease_table, RBC_status_table, encode_base64_from_bytes(convert_chart_fig_to_bytes(bar_chart, width, height)), encode_base64_from_bytes(convert_chart_fig_to_bytes(doughnut_chart, width, height)))
 
-def generate_pdf(uploaded_image, bounding_image,cell_disease_table, bar_chart, doughnut_chart):
-  tablestr='<table style="text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"><tr>'
-  for i in list(cell_disease_table.columns):
-    tablestr+=f'<th style="text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;">{i}</th>'
+def generate_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_table, bar_chart, doughnut_chart):
+  cell_disease_table_str='<table><tr>'
+  RBC_status_table_str='<table><tr>'
+
+  for i in list(RBC_status_table.columns):
+    RBC_status_table_str+=f'<th>{i}</th>'
   
-  tablestr+='</tr>'
+  for i in list(cell_disease_table.columns):
+    cell_disease_table_str+=f'<th>{i}</th>'
+  
+  RBC_status_table_str+='</tr>'
+  cell_disease_table_str+='</tr>'
+
+  for index, row in RBC_status_table.iterrows():
+    RBC_status_table_str+=f'<td>{row["HbA"]}</td>'
+    RBC_status_table_str+=f'<td>{row["HbS"]}</td>'
+    RBC_status_table_str+=f'<td>{row["HbC"]}</td>'
+    RBC_status_table_str+=f'<td>{row["status"]}</td></tr>'
 
   for index, row in cell_disease_table.iterrows():
-    tablestr+=f'<tr><td style="text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;">{str(index+1)}</td>'
-    tablestr+=f'<td style="text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;">{row["Classes"]}</td>'
-    tablestr+=f'<td style="text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;">{row["Count"]}</td>'
-    tablestr+=f'<td style="text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;">{row["Percentage"]}</td></tr>'
+    cell_disease_table_str+=f'<tr><td>{str(index+1)}</td>'
+    cell_disease_table_str+=f'<td>{row["Classes"]}</td>'
+    cell_disease_table_str+=f'<td>{row["Count"]}</td>'
+    cell_disease_table_str+=f'<td>{row["Percentage"]}</td></tr>'
 
-  tablestr+='</table>'
+  cell_disease_table_str+='</table>'
 
-  HTML_TEMPLATE=f"""<!DOCTYPE html>
+  HTML_TEMPLATE=f"""
+<!DOCTYPE html>
 <html>
 <head>
-<title>Page Title</title>
+<title></title>
 </head>
 <body>
-<div style="width:816px; height:1054px; padding:0px; margin:0px ;text-align:center; border: 10px solid red">
-<div style="content: ""; display: table; clear: both;">
-  <div style="float: left; width: 50%;">
+<div style="padding:0px; margin:0px; text-align:center;">
+<div class="row">
+<p>⚠️
+Disclaimer: This app is not intended to be a substitute for professional medical advice, diagnosis, or treatment. The predictions and information provided by the app are for educational and informational purposes only. The predictions are based on a model and may not always be accurate. Users should consult with a qualified healthcare provider before making any decisions based on the apps predictions or information.
+</p>
+</div>
+<div class="row">
+  <div class="column">
   <span style="font-size:20px; font-weight:bold">Uploaded Image</span>
-       <br>
-              <br>
-  <img src="data:image/png;base64,{uploaded_image}" alt=""  width="300" height="300" />
+  <br>
+  <br>
+  <img class="imagesize" src="data:image/png;base64,{uploaded_image}" alt="uploaded image" />
   </div>
-  <div style="float: left; width: 50%;">
-  <span style="font-size:20px; font-weight:bold">Predicted Image</span>
-       <br>     
-       <br>
-  <img src="data:image/png;base64,{bounding_image}" alt=""  width="300" height="300" />
+  <div class="column">
+  <span style="font-size:20px; font-weight:bold">Diagnose disease cells</span>
+  <br>     
+  <br>
+  <img class="imagesize" src="data:image/png;base64,{bounding_image}" alt="predicted image" />
   </div>
 </div>
-<div style="content: ""; display: table; clear: both;">
-  <div style="float: left; width: 50%;">
-  <span style="font-size:20px; font-weight:bold">Detected Cells in table</span>
-       <br>
-              <br>
-  {tablestr}
-             
-    </div>
-    <div style="float: left; width: 50%;">
-  <span style="font-size:20px; font-weight:bold">Bar Chart</span>
-       <br>
-              <br>
-              <img src="data:image/png;base64,{bar_chart}" alt="" />
+<div class="row"> 
+<span style="font-size:20px; font-weight:bold">Total diagnose detected classified cells are: {cell_disease_table['Count'].sum()}</span>
+</div>
+<div class="row">
+  <div class="column">
+  <span style="font-size:20px; font-weight:bold">Detected cells details</span>
+  <br>
+  <br>
+  {cell_disease_table_str}
+  </div>
+  <div class="column">
+  <span style="font-size:20px; font-weight:bold">sample test</span>
+  <br>
+  <br>
+  {RBC_status_table_str}
   </div>               
 </div>   
-<div style="content: ""; display: table; clear: both;">
-  <div style="width: 100%;">
-  <span style="font-size:20px; font-weight:bold">doughnut chart</span>
-       <br>
-              <br>
-               <img src="data:image/png;base64,{doughnut_chart}" alt="" />
-          </div>        
-    </div>
+<div class="row">
+  <span style="font-size:20px; font-weight:bold">Analysis of detected diseases cells</span>
+</div>
+<div class="row">
+  <br>              
+  <img class="barchartsize" src="data:image/png;base64,{bar_chart}"  alt="bar chart image"  />         
+</div>   
+<div class="row">
+  <br>
+  <img class="doughnutchartsize" src="data:image/png;base64,{doughnut_chart}" alt="doughnut chart image" />
+</div>
 </div>
 </body>
-</html>"""
-  return HTML(string=HTML_TEMPLATE).write_pdf(optimize_size=())
+</html>
+"""
+
+css=CSS(string=f'''@page {{size: Letter; margin: 0.1in 0.1in 0in 0.1in;}}
+img {{border: 5px solid #555;}}
+body{{display: block; margin: 0px;}}
+.imagesize{{height: {image_height}px; width: {image_width}px; margin: 0 auto;}}  
+.barchartsize{{height: {bar_chart_height}px; width: {bar_chart_width}px; margin: 0 auto;}} 
+.doughnutchartsize{{height: {doughnut_chart_height}px; width: {doughnut_chart_width}px; margin: 0 auto;}} 
+table,th,td{{text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"}}
+.column {{float: left; width: 50%; }}
+.row:after {{ content: ""; display: table; clear: both; }}
+''')
+
+  return HTML(string=HTML_TEMPLATE).write_pdf(optimize_size=(), stylesheets=[css])
