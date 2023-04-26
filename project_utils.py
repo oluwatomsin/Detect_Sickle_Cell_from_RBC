@@ -198,4 +198,4 @@ Disclaimer: This app is not intended to be a substitute for professional medical
        table,th,td{{text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"}}
       ''')    
 
-  return HTML_TEMPLATE # HTML(string=HTML_TEMPLATE).write_pdf(optimize_size=(), stylesheets=[css])
+  return HTML(string=HTML_TEMPLATE).write_pdf(optimize_size=(), stylesheets=[css])
