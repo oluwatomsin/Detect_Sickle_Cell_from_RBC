@@ -189,7 +189,6 @@ Disclaimer: This app is not intended to be a substitute for professional medical
   #    .column {{float: left; width: 50%; }}
   #    .row {{ content: ""; display: table; clear: both; }}
   #    ''')
-  
   css=CSS(string=f'''@page {{size: Letter; margin: 0.1in 0.1in 0in 0.1in;}}
       body{{display: block; margin: 0px;}}
       .imagesize{{height: {image_height}px; width: {image_width}px; margin: 0 auto;}}  
