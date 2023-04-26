@@ -126,7 +126,7 @@ Disclaimer: This app is not intended to be a substitute for professional medical
 </html>
 """
   css=CSS(string=f'''@page {{size: Letter; margin: 0.1in 0.1in 0in 0.1in;}}
-      body{{display: block; margin: 0px;}}
+      body{{display: block; margin: 1px;}}
       .imagesize{{height: {image_height}px; width: {image_width}px; margin: 0 auto;}}  
       .barchartsize{{height: {bar_chart_height}px; width: {bar_chart_width}px; margin: 0 auto;}} 
       .doughnutchartsize{{height: {doughnut_chart_height}px; width: {doughnut_chart_width}px; margin: 0 auto;}} 
