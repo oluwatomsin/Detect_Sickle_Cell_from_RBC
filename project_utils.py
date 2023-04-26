@@ -129,7 +129,7 @@ def generate_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_t
 #</html>
 #"""
 
-HTML_TEMPLATE=f"""
+  HTML_TEMPLATE=f"""
 <!DOCTYPE html>
 <html>
 <body style="padding-left:1px;">
@@ -179,22 +179,11 @@ Disclaimer: This app is not intended to be a substitute for professional medical
 </body>
 </html>
 """
-  #css=CSS(string=f'''@page {{size: Letter; margin: 0.1in 0.1in 0in 0.1in;}}
-  #    img {{border: 5px solid #555;}}
-  #    body{{display: block; margin: 0px;}}
-  #    .imagesize{{height: {image_height}px; width: {image_width}px; margin: 0 auto;}}  
-  #    .barchartsize{{height: {bar_chart_height}px; width: {bar_chart_width}px; margin: 0 auto;}} 
-  #    .doughnutchartsize{{height: {doughnut_chart_height}px; width: {doughnut_chart_width}px; margin: 0 auto;}} 
-  #     table,th,td{{text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"}}
-  #    .column {{float: left; width: 50%; }}
-  #    .row {{ content: ""; display: table; clear: both; }}
-  #    ''')
   css=CSS(string=f'''@page {{size: Letter; margin: 0.1in 0.1in 0in 0.1in;}}
       body{{display: block; margin: 0px;}}
       .imagesize{{height: {image_height}px; width: {image_width}px; margin: 0 auto;}}  
       .barchartsize{{height: {bar_chart_height}px; width: {bar_chart_width}px; margin: 0 auto;}} 
       .doughnutchartsize{{height: {doughnut_chart_height}px; width: {doughnut_chart_width}px; margin: 0 auto;}} 
-      table,th,td{{text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"}}
-      ''')    
-
+       table,th,td{{text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"}}
+      ''')
   return HTML(string=HTML_TEMPLATE).write_pdf(optimize_size=(), stylesheets=[css])
