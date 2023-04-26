@@ -133,10 +133,6 @@ HTML_TEMPLATE=f"""
 <!DOCTYPE html>
 <html>
 <body style="padding-left:1px;">
-<style>
-.imagesize{height: 300px; width: 300px; margin: 0 auto;} 
-.barchartsize{height: 300px; width: 300px; margin: 0 auto;}
-</style>
 <h2>Diagnose Sickle Cell Diseases by Red Blood Cells(RBCs) Classification</h2>
 <p style="width: 600px;font-size: 0.67em;font-weight: bold;margin-left:10px;padding:1px;">⚠️
 Disclaimer: This app is not intended to be a substitute for professional medical advice, diagnosis, or treatment. The predictions and information provided by the app are for educational and informational purposes only. The predictions are based on a model and may not always be accurate. Users should consult with a qualified healthcare provider before making any decisions based on the apps predictions or information.</p>
@@ -202,4 +198,4 @@ Disclaimer: This app is not intended to be a substitute for professional medical
        table,th,td{{text-align: center !important; padding: 1px !important; border: 2px solid black !important; border-collapse: collapse !important; font-size: large !important;"}}
       ''')    
 
-  return HTML(string=HTML_TEMPLATE).write_pdf(optimize_size=(), stylesheets=[css])
+  return HTML_TEMPLATE # HTML(string=HTML_TEMPLATE).write_pdf(optimize_size=(), stylesheets=[css])
