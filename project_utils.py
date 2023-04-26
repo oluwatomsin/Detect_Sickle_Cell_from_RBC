@@ -48,7 +48,7 @@ def generate_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_t
   doughnut_chart_height=height
 
   cell_disease_table_str='<table class="detectedcellsdetailstable"><tr><th class="detectedcellsdetailstable">Sr.No</th>'
-  RBC_status_table_str='<table class="detectedcellsdetailstable"><tr>'
+  RBC_status_table_str='<table class="detectedcellsdetailstable"><tr><th class="detectedcellsdetailstable"></th>'
 
   for i in list(RBC_status_table.columns):
     RBC_status_table_str+=f'<th class="detectedcellsdetailstable">{i}</th>'
@@ -56,8 +56,8 @@ def generate_pdf(uploaded_image, bounding_image,cell_disease_table, RBC_status_t
   for i in list(cell_disease_table.columns):
     cell_disease_table_str+=f'<th class="detectedcellsdetailstable">{i}</th>'
   
-  RBC_status_table_str+='</tr>'
-  cell_disease_table_str+='</tr>'
+  RBC_status_table_str+='</tr><tr><td class="detectedcellsdetailstable">SCD Status</td>'
+  cell_disease_table_str+='</tr><tr>'
 
   for index, row in RBC_status_table.iterrows():
     RBC_status_table_str+=f'<td class="detectedcellsdetailstable">{round(row["HbA"],2)}</td>'
@@ -108,7 +108,7 @@ Disclaimer: This app is not intended to be a substitute for professional medical
   {RBC_status_table_str}
     </td>
   </tr>
-        <tr rowspan="1"></tr>
+        <tr rowspan="2"></tr>
       <tr>
   <td colspan="2">
   <p style="font-size: 1.2em;font-weight: bold;text-align:center;">Analysis of detected diseases cells</p>
